@@ -185,6 +185,7 @@ function GetSystemAssetTag: String;
 function GetComputerFQDN : String;
 function GetComputerName : String;
 function GetUserName : String;
+function GetUserNameAndDomain : String;
 function GetWorkgroupName: String;
 function GetDomainName: String;
 
@@ -604,6 +605,52 @@ begin
   Result := Utf8Encode(sysutils.GetEnvironmentVariable('USERNAME'));
   {$ENDIF}
 end;
+
+function GetUserNameAndDomain: String;
+var
+  Domain: String;
+begin
+  {$ifdef windows}
+  Result := Utf8Encode(sysutils.GetEnvironmentVariable('USERNAME'));
+  Domain := LowerCase(Utf8Encode(sysutils.GetEnvironmentVariable('USERDNSDOMAIN')));
+  if Domain <> '' then
+    Result := Result + '@' + Domain
+  else if UpperCase(sysutils.GetEnvironmentVariable('COMPUTERNAME')) = UpperCase('\\'+sysutils.GetEnvironmentVariable('LOGONSERVER')) then
+    Result := Result + '@.';
+  {$else}
+  Result := GetUserName;
+  Domain := GetDomainName;
+  if Domain <> '' then
+    Result := Result + '@' + Domain;
+  {$endif}
+end;
+
+(*
+function GetDomainHostnameFromKeytab: String;
+var
+  klistout: TStringArray;
+begin
+  if not FileExistsUTF8('/etc/krb5.keytab') then
+      Exit('');
+  {$ifdef linux}
+  cmd := 'klist -k'
+  {$elseif defined(darwin)}
+  cmd := 'ktutil -k /etc/krb5.keytab list'
+  {$endif}
+  try
+    klistout := StrSplitLines(RunTask(cmd,ExitStatus));
+    splitlist = run(cmd).split('$@', 1)
+  except
+    on E:Exception do
+      Exit('');
+  end;
+
+  hostname = str(splitlist[0].rsplit(' ', 1)[-1]).split('/')[-1]
+  domain = splitlist[1].split('\n')[0].strip()
+
+  return (hostname,domain)
+end;
+*)
 
 function GetWorkgroupName: String;
 var
