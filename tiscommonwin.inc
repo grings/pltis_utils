@@ -590,7 +590,7 @@ end;
 
 function GetWindowsFolder: String;
 begin
-  Result := GetSpecialFolderLocation(CSIDL_WINDOWS);
+  Result := GetEnvironmentVariableUTF8('WINDIR');
 end;
 
 function GetCurrentUser: String;
