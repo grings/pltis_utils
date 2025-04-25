@@ -508,7 +508,7 @@ begin
 
     if (tok1<>'') or (tok2<>'') then
     begin
-      if (MembersCount>0) and (MemberIdx<=MembersCount) then
+      if (MembersCount <=0) or (MemberIdx<=MembersCount) then
       begin
         If tok1='' then tok1 := '0';
         If tok2='' then tok2 := '0';
@@ -536,6 +536,8 @@ begin
   begin
     if (pack1<>'') or (pack2<>'') then
     try
+      if pack1='' then pack1:='0';
+      if pack2='' then pack2:='0';
       Val(pack1,I1,Error1);
       Val(pack2,I2,Error2);
       If (Error1=0) and (Error2=0) then
