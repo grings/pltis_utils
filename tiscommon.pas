@@ -158,6 +158,7 @@ function StartServiceByName(const AServer,AServiceName: AnsiString):Boolean;
 function StopServiceByName(const AServer, AServiceName: AnsiString):Boolean;
 function SetServiceStartType(const AServer, AServiceName: AnsiString; const StartType: TServiceStartType ):Boolean;
 function GetServiceStartType(const AServer, AServiceName: AnsiString; out StartType: TServiceStartType): Boolean;
+function ServiceIsInstalled(const AServer, AServiceName: AnsiString): Boolean;
 
 function ProgramFilesX86:String;
 function ProgramFiles: String;
@@ -343,7 +344,7 @@ var
   ErrorIdx: Integer;
   FI: TFileInfoFull;
 begin
-  UnZipper := TZipRead.Create(ZipFilePath);
+  UnZipper := TZipRead.Create(ZipFilePath,{ZipStartOffset=}0 , {Size=}0 , {WorkingMem=}10 shl 20 );
   try
     ErrorIdx := UnZipper.UnZipAll(OutputPath);
     if ErrorIdx >= 0 then
