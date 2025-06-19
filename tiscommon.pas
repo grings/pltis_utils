@@ -158,7 +158,6 @@ function StartServiceByName(const AServer,AServiceName: AnsiString):Boolean;
 function StopServiceByName(const AServer, AServiceName: AnsiString):Boolean;
 function SetServiceStartType(const AServer, AServiceName: AnsiString; const StartType: TServiceStartType ):Boolean;
 function GetServiceStartType(const AServer, AServiceName: AnsiString; out StartType: TServiceStartType): Boolean;
-function ServiceIsInstalled(const AServer, AServiceName: AnsiString): Boolean;
 
 function ProgramFilesX86:String;
 function ProgramFiles: String;
