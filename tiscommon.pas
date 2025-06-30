@@ -766,6 +766,8 @@ begin
       begin
           found:=True;
           Result:=Copy(S,pos('=',S)+1,MaxInt);
+          if (Result<>'') and (Result[1]='"') and (Result[Length(Result)]='"') then
+            Result := Copy(Result,2,Length(Result)-2);
           Break;
       end;
   end;
@@ -803,6 +805,8 @@ begin
         NextIsValue := False;
         Result:=Copy(S,pos('=',S)+1,MaxInt);
         found := True;
+        if (Result<>'') and (Result[1]='"') and (Result[Length(Result)]='"') then
+          Result := Copy(Result,2,Length(Result)-2);
         Break;
       end;
 
@@ -816,6 +820,8 @@ begin
         begin
           Result:=Copy(S,3,MaxInt);
           found := True;
+          if (Result<>'') and (Result[1]='"') and (Result[Length(Result)]='"') then
+            Result := Copy(Result,2,Length(Result)-2);
           Break;
         end
         else
