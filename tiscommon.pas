@@ -167,6 +167,7 @@ function ProgramFiles: String;
 function UserInGroup(Group :DWORD) : Boolean;
 
 function GetApplicationVersion(FileName:String=''): String;
+function ProcessExists(ExeFileName: string): boolean;
 {$ENDIF}
 {$ENDIF}
 function GetLocalAppdataFolder: String;

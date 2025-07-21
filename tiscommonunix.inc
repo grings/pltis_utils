@@ -164,6 +164,26 @@ begin
     Result := '';
 end;
 
+function ProcessExists(ExeFileName: string): boolean;
+var
+  processes: TCardinalDynArray;
+  id: Cardinal;
+  ProcessName: RawUtf8;
+begin
+  ExeFileName := LowerCase(ExeFileName);
+  processes := EnumAllProcesses;
+  Result := False;
+  for id in processes do
+  begin
+    if (id = GetProcessID) then
+      Continue;
+    ProcessName := EnumProcessName(id);
+    if ExeFileName = ProcessName then
+      Exit(True);
+  end;
+
+end;
+
 function GetLocalAppdataFolder: String;
 begin
   Result := MakePath([GetUserDir,'.config']);
